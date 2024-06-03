@@ -5,6 +5,7 @@ import morgan from "morgan";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
+import { createClient } from "@supabase/supabase-js";
 
 import CatchAll from "./middlewares/catchall";
 import ErrorHandler from "./middlewares/error";
@@ -14,8 +15,17 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI;
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
+
 if (MONGODB_URI === undefined)
 	throw new Error("MONGODB_URI Not Provided. Aborting Startup");
+if (SUPABASE_URL === undefined)
+	throw new Error("SUPABASE_URL Not Provided. Aborting Startup");
+if (SUPABASE_KEY === undefined)
+	throw new Error("SUPABASE_KEY Not Provided. Aborting Startup");
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const app = express();
 app.use(morgan("dev"));
@@ -56,3 +66,5 @@ process.on("SIGINT", async () => {
 	await mongoose.connection.close();
 	process.exit();
 });
+
+export { supabase };

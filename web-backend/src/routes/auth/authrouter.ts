@@ -1,10 +1,17 @@
 import { Request, Response, NextFunction, Router } from "express";
-import { DefaultResponse } from "../../types";
+import { DefaultResponse } from "../../../types";
 
-import AuthRouter from "./auth/authrouter";
+import Login from "./login";
+import Signup from "./signup";
+import Verify from "./verify";
+import Authenticate from "./authenticate";
+
 const router = Router();
 
-router.use("/auth", AuthRouter);
+router.post("/login", Login);
+router.post("/signup", Signup);
+router.post("/verify", Verify);
+router.post("/authenticate", Authenticate);
 
 router.all("/", async (req: Request, res: Response, next: NextFunction) => {
 	try {
