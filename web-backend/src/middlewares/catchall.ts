@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { DefaultResponse } from "../../../types";
+import { DefaultResponse } from "../../types";
 const CatchAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		return res.status(404).json({

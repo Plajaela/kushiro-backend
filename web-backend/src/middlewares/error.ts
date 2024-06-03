@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { DefaultResponse } from "../../../types";
+import { DefaultResponse } from "../../types";
 const ErrorHandler = async (
 	err: Error,
 	req: Request,

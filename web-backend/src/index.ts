@@ -5,8 +5,10 @@ import morgan from "morgan";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
+
 import CatchAll from "./middlewares/catchall";
 import ErrorHandler from "./middlewares/error";
+import router from "./routes/router";
 
 dotenv.config();
 
@@ -27,11 +29,12 @@ app.use(
 		},
 	})
 );
-
+app.use(router);
 app.use("*", CatchAll);
 app.use(ErrorHandler);
 
 app.listen(PORT, async () => {
+	console.clear();
 	consola.ready(`Listening on PORT ${PORT}`);
 	mongoose.connection.on("error", (err) => consola.error(err));
 	mongoose.connection.on("connecting", () =>

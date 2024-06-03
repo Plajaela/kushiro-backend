@@ -1,0 +1,18 @@
+services:
+  frontend:
+    build: ./web-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    container_name: website-frontend
+  backend:
+    build: ./web-backend
+    ports:
+      - "3333:3333"
+    env_file:
+      - path: ./web-backend/.env
+        required: true
+    environment:
+      - PORT=3333
+    container_name: website-backend
