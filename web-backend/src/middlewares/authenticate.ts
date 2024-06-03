@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { DefaultResponse } from "../../../types";
-import { supabase } from "../..";
-
+import { DefaultResponse } from "../../types";
+import { supabase } from "..";
 const Authenticate = async (
 	req: Request,
 	res: Response,
@@ -10,19 +9,13 @@ const Authenticate = async (
 	try {
 		const token = req.headers.authorization;
 		if (token === undefined) throw new Error("Authorization header not found");
-
 		const { error, data } = await supabase.auth.getUser(token);
 		if (error) throw error;
-
-		return res.status(200).json({
-			status: 200,
-			valid: true,
-			message: "OK",
-			code: "OK",
-			data: data.user,
-		} as DefaultResponse);
+		res.locals.user = data.user;
+		return next();
 	} catch (e) {
 		next(e);
 	}
 };
+
 export default Authenticate;

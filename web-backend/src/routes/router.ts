@@ -2,9 +2,11 @@ import { Request, Response, NextFunction, Router } from "express";
 import { DefaultResponse } from "../../types";
 
 import AuthRouter from "./auth/authrouter";
+import ReviewRouter from "./review/reviewrouter";
 const router = Router();
 
 router.use("/auth", AuthRouter);
+router.use("/review", ReviewRouter);
 
 router.all("/", async (req: Request, res: Response, next: NextFunction) => {
 	try {

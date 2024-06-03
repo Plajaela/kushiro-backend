@@ -24,6 +24,8 @@ const Signup = async (req: Request, res: Response, next: NextFunction) => {
 					last_name: "Doe",
 					location_1: "Hokkaido",
 					location_2: "Japan",
+					profile_picture_url:
+						"https://uyceldzehojijmikgqtl.supabase.co/storage/v1/object/public/profile-pictures/default.png",
 				},
 			},
 		});
