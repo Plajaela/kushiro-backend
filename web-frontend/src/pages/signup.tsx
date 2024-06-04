@@ -9,13 +9,15 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { IoPerson } from "react-icons/io5";
 const jakarta = Plus_Jakarta_Sans({
 	weight: "400",
 	subsets: ["latin"],
 });
-const Signin = () => {
+const Signup = () => {
 	const router = useRouter();
 	const [revealPassword, setReveal] = useState(false);
+	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -23,7 +25,7 @@ const Signin = () => {
 		async (e: FormEvent<HTMLFormElement>) => {
 			e.preventDefault();
 			if (!router.isReady) return;
-			const fetchLogin = await fetch(`${process.env.ENDPOINT}/auth/login`, {
+			const fetchLogin = await fetch(`${process.env.ENDPOINT}/auth/signup`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -31,25 +33,25 @@ const Signin = () => {
 				body: JSON.stringify({
 					email: email,
 					password: password,
+					username: username,
 				}),
 			});
 			if (fetchLogin.status !== 200) {
-				toast.error("Could not login!");
+				toast.error("Could not signup!");
 				return;
 			}
 			const jsonData = await fetchLogin.json();
-			const token = jsonData.data.access_token;
-			localStorage.setItem("token", token);
-			router.push("/discover");
-			toast.success("Logged in!");
+			const id = jsonData.data.email;
+			router.push("/verify?email=" + id);
+			return;
 		},
-		[email, password, router]
+		[email, password, router, username]
 	);
 
 	return (
 		<>
 			<Head>
-				<title>Signin</title>
+				<title>Sign up</title>
 			</Head>
 			<main
 				className={
@@ -69,14 +71,29 @@ const Signin = () => {
 							</h2>
 						</div>
 						<div className="w-1/2 bg-white bg-opacity-45 rounded-2xl flex flex-col align-middle justify-center p-10">
-							<h2 className="text-center text-5xl font-light">Sign in</h2>
+							<h2 className="text-center text-5xl font-light">Sign up</h2>
 							<form className="flex flex-col px-5" onSubmit={submitForm}>
+								<label htmlFor="username" className="text-white">
+									Username
+								</label>
+								<span className="flex flex-row bg-white gap-2 p-2 rounded-full mb-5">
+									<IoPerson size={30} className="m-auto" />
+									<input
+										required
+										type="text"
+										name="username"
+										value={username}
+										onChange={(e) => setUsername(e.target.value)}
+										className="border-none focus:outline-none flex flex-grow"
+									/>
+								</span>
 								<label htmlFor="email" className="text-white">
 									Email
 								</label>
 								<span className="flex flex-row bg-white gap-2 p-2 rounded-full mb-5">
 									<HiOutlineMailOpen size={30} className="m-auto" />
 									<input
+										required
 										type="email"
 										name="email"
 										value={email}
@@ -90,6 +107,7 @@ const Signin = () => {
 								<span className="flex flex-row bg-white gap-2 p-2 rounded-full mb-10 flex-grow">
 									<CiLock size={30} className="m-auto" />
 									<input
+										required
 										type={revealPassword ? "text" : "password"}
 										name="password"
 										value={password}
@@ -135,4 +153,4 @@ const Signin = () => {
 	);
 };
 
-export default Signin;
+export default Signup;

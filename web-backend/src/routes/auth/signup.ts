@@ -13,6 +13,12 @@ const Signup = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const { error, value } = signupform.validate(req.body);
 		if (error) throw error;
+		const verify = await supabase
+			.from("users")
+			.select("*")
+			.eq("email", value.email);
+		if (verify.error) throw verify.error;
+		if (verify.data.length !== 0) throw new Error("User already exists");
 		const signup = await supabase.auth.signUp({
 			email: value.email,
 			password: value.password,
