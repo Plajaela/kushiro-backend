@@ -31,7 +31,7 @@ COPY package*.json ./
 RUN npm install --only=production
 
 # Copy the built code from the first stage
-COPY --from=builder /app/build ./dist
+COPY --from=builder /app/build ./build
 
 # Command to run the application
 CMD ["npm","start"]
