@@ -23,6 +23,19 @@ const Verify = async (req: Request, res: Response, next: NextFunction) => {
 			type: "email",
 		});
 		if (error) throw error;
+		if (!data.user) throw new Error("User not found");
+
+		const writeDatabase = await supabase.from("users").insert({
+			user_id: data.user?.id,
+			email: data.user?.email,
+			username: data.user?.user_metadata.username,
+			first_name: data.user.user_metadata.first_name,
+			last_name: data.user.user_metadata.last_name,
+			location_1: data.user.user_metadata.location_1,
+			location_2: data.user.user_metadata.location_2,
+			profile_picture_url: data.user.user_metadata.profile_picture_url,
+		});
+		if (writeDatabase.error) throw writeDatabase.error;
 
 		return res.status(200).json({
 			status: 200,

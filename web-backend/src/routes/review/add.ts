@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { DefaultResponse } from "../../../types";
+import { supabase } from "../..";
 import joi from "joi";
-import reviewSchema from "../../schemas/review";
 
 const reviewbody = joi.object({
 	stars: joi.number().min(0).max(5).required(),
@@ -14,21 +14,21 @@ const Add = async (req: Request, res: Response, next: NextFunction) => {
 		const review = reviewbody.validate(req.body);
 		if (review.error) throw review.error;
 		if (!res.locals.user) throw new Error("User object not found");
-		const reviewObject = new reviewSchema({
+
+		const { data, error } = await supabase.from("reviews").insert({
+			user_id: res.locals.user.id,
 			stars: review.value.stars,
 			review: review.value.review,
-			user_id: res.locals.user.id,
 			location: review.value.location,
 		});
-		const dbUpload = await reviewObject.save().catch(() => null);
-		if (dbUpload === null)
-			throw new Error("Something went wrong when trying to save");
+		if (error) throw error;
+
 		return res.status(200).json({
 			status: 200,
 			valid: true,
 			code: "OK",
 			message: "OK",
-			data: dbUpload,
+			data: data,
 		} as DefaultResponse);
 	} catch (e) {
 		next(e);
