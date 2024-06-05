@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				pauseOnHover={false}
 				theme="light"
 			/>
-			<Component {...pageProps} />;
+			<Component {...pageProps} />
 		</>
 	);
 }
