@@ -57,7 +57,7 @@ const Signin = () => {
 					" min-h-screen w-auto overflow-scroll flex flex-col bg-[url(/background_1.png)] bg-cover bg-center bg-no-repeat bg-origin-border"
 				}
 			>
-				<section className=" bg-white flex flex-grow m-16 rounded-2xl p-16 flex-col bg-opacity-50 align-middle justify-between gap-2">
+				<section className=" bg-[#FFFFFF] flex flex-grow m-16 rounded-2xl p-16 flex-col bg-opacity-70 shadow-xl align-middle justify-between gap-2">
 					<div className="w-full flex flex-row align-middle justify-start">
 						<BiSolidQuoteAltLeft size={35} color="white" />
 					</div>
@@ -68,7 +68,7 @@ const Signin = () => {
 								Let&apos;s explore Kushiro together
 							</h2>
 						</div>
-						<div className="w-1/2 bg-white bg-opacity-45 rounded-2xl flex flex-col align-middle justify-center p-10">
+						<div className="w-1/2 bg-[#ABABAB] bg-opacity-20 rounded-2xl flex flex-col align-middle justify-center p-10">
 							<h2 className="text-center text-5xl font-light">Sign in</h2>
 							<form className="flex flex-col px-5" onSubmit={submitForm}>
 								<label htmlFor="email" className="text-white">

@@ -4,6 +4,15 @@ const nextConfig = {
 	env: {
 		ENDPOINT: process.env.ENDPOINT,
 	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "uyceldzehojijmikgqtl.supabase.co",
+				port: "",
+			},
+		],
+	},
 };
 
 export default nextConfig;
