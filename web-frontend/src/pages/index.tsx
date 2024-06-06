@@ -20,17 +20,11 @@ export default function Home() {
 			>
 				<header className="flex flex-row align-middle justify-between  h-28 px-20 pt-5">
 					<h1 className="text-center h-min my-auto text-white text-3xl">
-						<Link href={"/"} prefetch>
-							DREAMY KUSHIRO
-						</Link>
+						<Link href={"/"}>DREAMY KUSHIRO</Link>
 					</h1>
 					<div className="flex flex-row align-middle justify-between gap-10 my-auto text-2xl text-white">
-						<Link href={"/signin"} prefetch>
-							Signin
-						</Link>
-						<Link href={"/signup"} prefetch>
-							Signup
-						</Link>
+						<Link href={"/signin"}>Signin</Link>
+						<Link href={"/signup"}>Signup</Link>
 					</div>
 				</header>
 				<section
