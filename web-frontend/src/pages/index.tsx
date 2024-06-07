@@ -10,7 +10,7 @@ export default function Home() {
 	return (
 		<>
 			<Head>
-				<title>Kushiro, Hokkaido</title>
+				<title>Kushiro - Hokkaido</title>
 			</Head>
 			<main
 				className={

@@ -142,6 +142,10 @@ const Marsh = ({ data }: { data: Data[] }) => {
 						);
 					})}
 				</div>
+
+				<Link href={"/review/akan"} className="italic ml-auto flex">
+					Submit your own review!
+				</Link>
 			</main>
 			<footer className="h-[3rem] flex flex-row align-middle justify-between px-10 bg-[#2D4033]">
 				<HiOutlineHome
