@@ -115,7 +115,36 @@ const Profile = () => {
 				setUser(null);
 			});
 	}, [router]);
-	const saveData = useCallback(async () => {}, []);
+	const saveData = useCallback(async () => {
+		if (!router.isReady) return;
+		const token = localStorage.getItem("token");
+		if (token === null) return;
+		const query = await fetch(`${process.env.ENDPOINT}/auth/profile`, {
+			method: "POST",
+			headers: {
+				Authorization: token,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				first_name,
+				last_name,
+				phone,
+				location_1,
+				location_2,
+			}),
+		}).catch(() => null);
+		if (query === null) {
+			toast.error("Something went wrong when trying to save.");
+			return;
+		}
+		if (query.status !== 200) {
+			toast.error("Failed to save...");
+			return;
+		}
+		toast.success("Updated profile!");
+		router.reload();
+		return;
+	}, [first_name, last_name, phone, location_1, location_2, router]);
 
 	if (user === null) {
 		return (
@@ -135,7 +164,7 @@ const Profile = () => {
 					" min-h-screen w-full flex flex-grow flex-col align-middle"
 				}
 			>
-				<header className="flex flex-row align-middle justify-end w-full p-5 border-b-[#9A9292] border-opacity-60 border-b-4">
+				<header className="flex flex-row align-middle justify-end w-full p-5 border-b-[#9A9292] border-opacity-60 border-b-4 gap-5">
 					<div className="relative w-[3rem] h-[3rem] my-auto border-4 rounded-full">
 						<Image
 							src={user.user_metadata.profile_picture_url}
@@ -144,7 +173,7 @@ const Profile = () => {
 							alt="Profile Picture"
 						/>
 					</div>
-					<span className="h-min my-auto w-[8rem] text-center text-xl">
+					<span className="h-min my-auto w-auto text-left text-xl">
 						{user.user_metadata.first_name + " " + user.user_metadata.last_name}
 					</span>
 				</header>
@@ -241,7 +270,10 @@ const Profile = () => {
 								/>
 							</div>
 							<div className="col-span-2 p-10 align-middle justify-center flex ">
-								<button className="text-xl bg-[#D9D9D9] w-1/2 rounded-2xl">
+								<button
+									className="text-xl bg-[#D9D9D9] w-1/2 rounded-2xl"
+									onClick={saveData}
+								>
 									Save Changes
 								</button>
 							</div>
