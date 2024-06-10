@@ -168,7 +168,7 @@ export default Marsh;
 
 export async function getServerSideProps() {
 	const response = await fetch(
-		`${process.env.ENDPOINT}/review/list/MARSH?limit=3`
+		`${process.env.BACKEND_CONTAINER}/review/list/MARSH?limit=3`
 	);
 	if (response.status !== 200)
 		return {

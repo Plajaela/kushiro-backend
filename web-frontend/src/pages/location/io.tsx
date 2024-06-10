@@ -191,7 +191,7 @@ export default IO;
 
 export async function getServerSideProps() {
 	const response = await fetch(
-		`${process.env.ENDPOINT}/review/list/IO?limit=3`
+		`${process.env.BACKEND_CONTAINER}/review/list/IO?limit=3`
 	);
 	if (response.status !== 200)
 		return {

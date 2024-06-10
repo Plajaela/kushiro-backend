@@ -163,7 +163,7 @@ export default Akan;
 
 export async function getServerSideProps() {
 	const response = await fetch(
-		`${process.env.ENDPOINT}/review/list/AKAN?limit=3`
+		`${process.env.BACKEND_CONTAINER}/review/list/AKAN?limit=3`
 	);
 	if (response.status !== 200)
 		return {
